@@ -1,0 +1,42 @@
+一、MATLAB与excel交互
+①从excel读入数据到MATLAB中
+a = xlsread(;D:\CO2.xlsx',2,'A1:B5')
+xlsread函数可实现在MATLAB中读入excel数据；'D...'表示读入数据的excel所在的路径以及excel文件名称；2表示位于sheet2；‘A1:B5’表示校园读入数据的范围；
+②从MATLAB往我先撤了中写入数据
+xlswrite('D:\CO2.xlsx',a,3,'B1:C5')
+‘D:...’表示写入excel工作簿所在的为位置，如果指定位置不存在指定的excel文件，MATLAB会自动创建工作簿；a表示待写入的数据；3表示sheet3；‘B1:C5’表示写入excel中的具体位置。
+二、MATLAB与TXT交互
+1.读入txt文件
+①load
+load('***.txt')
+exp:{
+a=linspace(1,30,8);
+save d:\exper.txt a -ascii;
+b=load('d:\exper.txt')
+}
+save ... 用来把变量a以ascii码存储在D盘的exper.txt文件中，如果不存在名为exper.txt的文本文件，MATLAB将自动创建exper.txt文件。
+②textread
+如果txt文件中存储了不同类型的字符或者数据，分类读取数据就需要使用textread函数了，textread读取信息的好处是可以做到控制输出更精准以及不需要使用fopen命令打开文件就可以直接读取txt里的内容了。其语法格式为：
+[A,B,C,...]=textread('filename','format',N,'headerlines',M)
+其中，filename表示需要读入的txt文件名称；‘format’表示读出变量的字段格式；N表示读取的次数，每一次读取一行；headerlines表示从第M+1行开始读入。
+exp:{
+[name,type,x,y,answer]=textread("D:\t.txt','%s Type %d%f%n%s',2,...
+'headerlines',1)
+}
+
+③fopen
+exp:{
+fid = fopen('D:\CRM4.m','r');
+%以字符形式读取整个文本
+var = fread(fid,'*char');
+var = native2unicode(var)
+fclose(fid);
+}
+2.写入txt文件内容
+①fprintf
+exp:{
+file_h=fopen('D:\math114.txt','w');
+fprintf(file_h,'%6.2f %12.8f',3.14,2.718);
+fprintf(file_h,'\n %6f %12f',3.14,-2.718);
+fprintf(file_h,'\n %.2f %.8f',3.14,-2.718);
+fclose(file_h);

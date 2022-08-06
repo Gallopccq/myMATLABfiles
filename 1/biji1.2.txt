@@ -1,0 +1,24 @@
+1.2数据拟合方法
+1.多项式拟合
+指令：{
+polyfit(X,Y,N):多项式拟合，返回降幂排列的多项式系数
+polyval(P,XI):计算多项式的值。
+其中X,Y是数据点的值；N是拟合的最高次幂；P是返回的多项式系数；XI是要求的点的横坐标。
+}
+exp:｛
+x=[1 2 3 4 5 6 7 8 9];
+y=[9 7 6 3  -1 2 5 7 20];
+p=polyfit(x,y,3);
+xi=0:0.2:10;
+yi=polyval(p,xi);
+plot(xi,yi,x,y,'r *');
+｝
+2.指定函数拟合
+ep:{
+x=[...];y=[...];
+f = fittype('a*cos(k*t)*exp(w*t)','independent','t','coefficients',{'a','k','w'});
+cfun = fit(x,y,f)
+xi = ...;
+yi = cfun(xi);
+plot(x,y,'r*',xi,yi,'b-');
+}
